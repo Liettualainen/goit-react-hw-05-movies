@@ -1,9 +1,9 @@
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense, useRef } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { getMovieDetails } from '../../services/moviesDB';
 
-import { DetailBtn, DatailWrap, FilmCard, FilmInfo, FilmTitle, Info, InfoLink, }
-  from './MovieDetails.styled';
+import { DetailBtn, DatailWrap, FilmCard, FilmInfo, FilmTitle, Info, InfoLink,} 
+from './MovieDetails.styled';
 
 const imgUrl = 'https://image.tmdb.org/t/p/w500';
 
@@ -11,7 +11,7 @@ const MovieDetails = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState({});
   const location = useLocation();
-  const backLink = location.state?.from ?? '/';
+  const backLink = useRef(location.state?.from ?? '/');
   console.log(backLink);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const MovieDetails = () => {
 
   return (
     <DatailWrap>
-      <DetailBtn to={backLink}>Go back</DetailBtn>
+      <DetailBtn to={backLink.current}>Go back</DetailBtn>
 
       <FilmCard>
         <img src={movieUrl && imgPath} alt={movie.title} width={400} />
@@ -40,12 +40,12 @@ const MovieDetails = () => {
           <FilmTitle>{movie.title}</FilmTitle>
           <Info>
             <li>
-              <InfoLink to="cast" state={{ from: `${backLink}` }}>
+              <InfoLink to="cast" >
                 Cast
               </InfoLink>
             </li>
             <li>
-              <InfoLink to="reviews" state={{ from: `${backLink}` }}>
+              <InfoLink to="reviews" >
                 Reviews
               </InfoLink>
             </li>
@@ -60,3 +60,5 @@ const MovieDetails = () => {
 };
 
 export default MovieDetails;
+
+// state={{ from: `${backLink}` }}
