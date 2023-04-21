@@ -2,15 +2,8 @@ import { useEffect, useState, Suspense } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { getMovieDetails } from '../../services/moviesDB';
 
-import {
-  DetailBtn,
-  DatailWrap,
-  FilmCard,
-  FilmInfo,
-  FilmTitle,
-  Info,
-  InfoLink,
-} from './MovieDetails.styled';
+import { DetailBtn, DatailWrap, FilmCard, FilmInfo, FilmTitle, Info, InfoLink, }
+  from './MovieDetails.styled';
 
 const imgUrl = 'https://image.tmdb.org/t/p/w500';
 

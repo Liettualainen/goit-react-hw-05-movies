@@ -9,16 +9,17 @@ import { MovieItem, MovieList, MovieLink } from '../../pages/Home/Home.styled';
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('query');
+  const query = searchParams.get('query') ?? '';
 
   useEffect(() => {
     if (!query) return;
     async function fetchMovies() {
-      const response = await getSearchMovies(query);
+      // getSearchMovies(query);
+      try {
+   const response = await getSearchMovies(query);
       const results = response.data.results;
       setMovies(results);
-      try {
-        getSearchMovies(query);
+     
       } catch (err) {
         console.log(err.message);
       }
@@ -29,14 +30,14 @@ const Movies = () => {
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
-    setSearchParams({ query: form.elements.query.value });
-    form.elements.query.value = '';
+    setSearchParams({ query: form.query.value });
+    form.query.value = '';
   };
   return (
     <main>
       <FormMovies onSubmit={handleSubmit}>
         <MoviesInput type="text" name="query" />
-        <SearchButton type="submit">search</SearchButton>
+        <SearchButton type="submit">SEARCH</SearchButton>
       </FormMovies>
       <MovieList>
         {movies.map(el => {
